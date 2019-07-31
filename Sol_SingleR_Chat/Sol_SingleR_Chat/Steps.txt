@@ -1,0 +1,56 @@
+﻿Step 1:
+Create Razger Page Application.
+
+Step 2:
+Create a Hub folder in Solution.
+
+Step 3:
+In the Hubs folder, create a ChatHub.cs.
+
+Step 4:
+Add the following namespace in ChatHub class.
+using Microsoft.AspNetCore.SignalR;
+
+Step 5: 
+The ChatHub class inherits from the SignalR Hub class. The Hub class manages connections, groups, and messaging.
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR;
+
+namespace Sol_SingleR_Chat.Hubs
+{
+    public class ChatHubs : Hub
+    {
+        public async Task SendMessageAsync(string userName, string message)
+        {
+            await Clients.All.SendAsync("ReceiveMessageMethod", userName, message);
+        }
+        
+    }
+}
+
+
+
+Step 6:
+Configure Singler in StartUp Class.
+
+
+            // Add Single R Service
+            services.AddSignalR();
+
+			// Use Single R
+			 app.UseSignalR(routes =>
+            {
+                routes.MapHub<ChatHubs>("/chathub");
+            });
+
+Step 7:
+Add SingleR Client Lib using NPM
+npm install @aspnet/signalr --save-dev
+
+Step 8:
+Make chat page and chat.js file.
+
+
